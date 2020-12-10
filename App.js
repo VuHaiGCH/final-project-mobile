@@ -10,6 +10,12 @@ import ListofDocument from '././components/Document/ListofDocument';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailofNews from './components/News/DetailofNews';
+import Schedule from './components/Class/Schedule';
+import LoginScreen from './components/auth/LoginScreen'
+import AddBlog from './components/Blogs/AddBlog';
+import CommentUser from './components/Blogs/CommentUser';
+import ListBlog from './components/Blogs/ListBlog';
+import Chat from './components/Chat/Chat';
 
 const Stack = createStackNavigator();
 
@@ -17,13 +23,20 @@ function MyStack() {
   return (
 
     <Stack.Navigator>
+
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          title: 'Student Assistant'
+        }}
+      />
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{
-          title: 'Home',
-        }}
+        options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name="ListFee"
         component={ListFee}
@@ -38,7 +51,7 @@ function MyStack() {
       <Stack.Screen
         name="ListMark"
         component={ListOfMark}
-        options={{ title: 'User Detail' }}
+        options={{ title: 'Mark' }}
       />
 
       <Stack.Screen
@@ -57,6 +70,37 @@ function MyStack() {
         name="DetailofNews"
         component={DetailofNews}
         options={{ title: 'Detail' }}
+      />
+
+      <Stack.Screen
+        name="schedule"
+        component={Schedule}
+        options={{ title: 'Scheduel' }}
+      />
+
+      <Stack.Screen
+        name="AddBlog"
+        component={AddBlog}
+        options={{ title: 'Add Blog' }}
+      />
+
+
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{ title: 'Chat' }}
+      />
+
+      <Stack.Screen
+        name="ListBlog"
+        component={ListBlog}
+        options={{ title: 'Comments' }}
+      />
+
+      <Stack.Screen
+        name="CommentUser"
+        component={CommentUser}
+        options={{ title: 'Comments' }}
       />
 
     </Stack.Navigator>

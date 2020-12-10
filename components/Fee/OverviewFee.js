@@ -46,20 +46,13 @@ export default class OverviewFee extends Component {
 
 
     render() {
-        const component1 = () => <Text>Overview</Text>
-        const component2 = () => <Text>Detail</Text>
 
-        const buttons = [{ element: component1 }, { element: component2 }]
-        const { selectedIndex } = this.state
 
 
         return (
             <ScrollView>
 
-                <ButtonGroup
-                    onPress={this.updateIndex}
-                    selectedIndex={selectedIndex}
-                    buttons={buttons} />
+
 
                 {
                     this.state.OverviewFeeArr.map((item, i) => {

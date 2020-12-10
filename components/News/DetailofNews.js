@@ -23,10 +23,11 @@ const DetailofNews = (props) => {
 
 
     const getNewsById = async (id) => {
-        const dbRef = firebase.db.collection("news").doc(id);
+        const dbRef = firebase.firestore().collection("news").doc(id);
         const doc = await dbRef.get();
         const news = doc.data();
         setNews({ ...news, id: doc.id });
+        console.log(id)
     };
 
     useEffect(() => {

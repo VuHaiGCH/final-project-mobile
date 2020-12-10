@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Avatar, Icon, Header, ListItem, ButtonGroup, Card } from "react-native-elements";
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Card } from "react-native-elements";
 import firebase from '../../database/fbConfig';
 
 
@@ -8,7 +8,9 @@ export default class ListFee extends Component {
 
     constructor() {
         super();
-        this.firestoreRef = firebase.db.collection('fee');
+        let user = firebase.auth().currentUser;
+        console.log(user)
+        this.firestoreRef = firebase.firestore().collection('fee').where("displayName", "==", user.displayName);
         this.state = {
             isLoading: true,
             feeArr: []
@@ -26,57 +28,32 @@ export default class ListFee extends Component {
     getCollection = (querySnapshot) => {
         const feeArr = [];
         querySnapshot.forEach((res) => {
-            const { amout, idbank, semester, namebank  } = res.data();
+            const { hasPaid, needPaid , idbank, semester, nameBank, name, status } = res.data();
             feeArr.push({
                 key: res.id,
                 res,
                 semester,
-                namebank,
-                amout,
+                nameBank,
+                name,
                 idbank,
+                hasPaid,
+                needPaid,
+                status
             });
         });
         this.setState({
             feeArr,
             isLoading: false,
         });
+        console.log(feeArr)
     }
 
 
     render() {
-        const component1 = () => <Text>Overview</Text>
-        const component2 = () => <Text>Detail</Text>
 
-        const buttons = [{ element: component1 }, { element: component2 }]
-        const { selectedIndex } = this.state
-
-        const list = [
-            {
-                name: 'ID Bank',
-                subtitle: '111111111111111'
-            },
-            {
-                name: 'Not Done',
-                subtitle: '37,504,422'
-            },
-
-            {
-                name: 'Done',
-                subtitle: '37,504,422'
-            },
-
-            {
-                name: 'Need submit',
-                subtitle: '0'
-            },
-        ]
         return (
             <ScrollView>
 
-                <ButtonGroup
-                    onPress={this.updateIndex}
-                    selectedIndex={selectedIndex}
-                    buttons={buttons} />
 
                 {
                     this.state.feeArr.map((item, i) => {
@@ -88,9 +65,11 @@ export default class ListFee extends Component {
 
 
                                 <View>
-                                    <Text style={styles.name}>Amout: {item.amout} VND</Text>
+                                    <Text style={styles.name}>Has paid: {item.hasPaid} VND</Text>
                                     <Text style={styles.name}>ID of Bank: {item.idbank}</Text>
-                                    <Text style={styles.name}>Name of Bank: {item.namebank}</Text>
+                                    <Text style={styles.name}>Name of Bank: {item.nameBank}</Text>
+                                    <Text style={styles.name}>Status: {item.status}</Text>
+
                                 </View>
 
                             </Card>

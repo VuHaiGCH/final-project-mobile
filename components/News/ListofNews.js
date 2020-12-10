@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { ListItem, } from "react-native-elements";
+import { ListItem } from "react-native-elements";
 import firebase from '../../database/fbConfig';
 
 export default class ListofNews extends Component {
 
     constructor() {
         super();
-        this.firestoreRef = firebase.db.collection('news');
+        this.firestoreRef = firebase.firestore().collection('news');
         this.state = {
             isLoading: true,
             newsArr: []
@@ -53,9 +53,9 @@ export default class ListofNews extends Component {
                         return (
 
                             <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('DetailofNews', {
-                                newsId: item.key,
-                            })}
+                                onPress={() => this.props.navigation.navigate('DetailofNews', {
+                                    newsId: item.key,
+                                })}
 
                             >
                                 <View>
@@ -67,7 +67,6 @@ export default class ListofNews extends Component {
 
                                         <ListItem.Content>
                                             <ListItem.Title>{item.title}</ListItem.Title>
-                                            <ListItem.Subtitle>{item.content}</ListItem.Subtitle>
                                         </ListItem.Content>
                                     </ListItem>
                                 </View>

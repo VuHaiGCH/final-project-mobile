@@ -8,9 +8,10 @@ export default class Dashboard extends Component {
 
     const { navigate } = this.props.navigation;
 
+
     return (
       <ScrollView>
-
+        
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -30,6 +31,7 @@ export default class Dashboard extends Component {
 
           <TouchableOpacity
             style={styles.categoryBtn}
+            onPress={() => this.props.navigation.navigate('Chat')}
           >
             <View style={styles.categoryIcon}>
               <Icon
@@ -39,14 +41,14 @@ export default class Dashboard extends Component {
                 color='#517fa4'
               />
             </View>
-            <Text style={styles.categoryBtnTxt}>Schedule</Text>
+            <Text style={styles.categoryBtnTxt}>Chat</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.categoryBtn}
-            onPress={() => this.props.navigation.navigate('OverviewFee')}
+            onPress={() => this.props.navigation.navigate('ListFee')}
           >
             <View style={styles.categoryIcon}>
               <Icon
@@ -94,6 +96,7 @@ export default class Dashboard extends Component {
 
           <TouchableOpacity
             style={styles.categoryBtn}
+            onPress={() => this.props.navigation.navigate('ListBlog')}
           >
             <View style={styles.categoryIcon}>
               <Icon
@@ -103,7 +106,7 @@ export default class Dashboard extends Component {
                 color='#517fa4'
               />
             </View>
-            <Text style={styles.categoryBtnTxt}>Exam Schedule</Text>
+            <Text style={styles.categoryBtnTxt}>Blogs</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
 
   categoryBtn: {
     flex: 1,
-    width: '50%',
+    width: '40%',
     marginHorizontal: 0,
     alignSelf: 'center',
   },

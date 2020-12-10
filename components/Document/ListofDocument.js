@@ -25,7 +25,7 @@ export default class ListofDocument extends Component {
 
     constructor() {
         super();
-        this.firestoreRef = firebase.db.collection('document');
+        this.firestoreRef = firebase.firestore().collection('document');
         this.state = {
             isLoading: true,
             documentsArr: []

@@ -1,15 +1,17 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Avatar, Header, ListItem, ButtonGroup, Card, Image, Button } from "react-native-elements";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from '../../database/fbConfig';
 
 export default class ListOfMark extends Component {
 
     constructor() {
         super();
-        this.firestoreRef = firebase.db.collection('mark');
+        let user = firebase.auth().currentUser;
+        console.log(user)
+        this.firestoreRef = firebase.firestore().collection('mark').where("displayName", "==", user.displayName);
         this.state = {
+            email:"",
             isLoading: true,
             marksArr: []
         };
@@ -26,7 +28,7 @@ export default class ListOfMark extends Component {
     getCollection = (querySnapshot) => {
         const marksArr = [];
         querySnapshot.forEach((res) => {
-            const { id, classes, course, onlineTest, quiz, report, avg, status   } = res.data();
+            const { id, classes, course, onlineTest, quiz, report, avg, status } = res.data();
             marksArr.push({
                 key: res.id,
                 res,
@@ -52,25 +54,30 @@ export default class ListOfMark extends Component {
         return (
             <ScrollView>
 
-{
+                {
                     this.state.marksArr.map((item, i) => {
                         return (
 
                             <View key={i} style={styles.user}>
                                 <Card>
-                                    <Card.Title>{item.course}</Card.Title>
+                                    <Card.Title style={styles.title}>{item.course}</Card.Title>
                                     <Card.Divider />
                                     <View style={styles.name1}>
-                                            
-                                            <Text style={styles.name}>Online Test: {item.onlineTest}</Text>
-                                            <Text style={styles.name}>Quiz: {item.quiz}</Text>
-                                            <Text style={styles.name}>Report: {item.report}</Text>
-                                            <Text style={styles.name}>Average: {item.avg}</Text>
+
+                                        <Text style={styles.name}>Online Test</Text>
+                                        <Text style={styles.mark}>{item.onlineTest}</Text>
+                                        <Text style={styles.name}>Quiz</Text>
+                                        <Text style={styles.mark}>{item.quiz}</Text>
+                                        <Text style={styles.name}>Report</Text>
+                                        <Text style={styles.mark}>{item.report}</Text>
+                                        <Text style={styles.name}>Average</Text>
+                                        <Text style={styles.mark}>{item.avg}</Text>
                                     </View>
                                     <Card.Divider />
                                     <Card.Title style={styles.status}>{item.status}</Card.Title>
 
                                 </Card>
+
                             </View>
                         );
                     })
@@ -84,21 +91,24 @@ export default class ListOfMark extends Component {
 
 const styles = StyleSheet.create({
     name1: {
-        flexDirection: "row",
+        flexDirection: "column",
         width: '100%'
     },
 
+    title: {
+        fontSize: 30
+    },
     name: {
-        flex: 1,
+        fontSize: 20
     },
 
     mark: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: 'flex-start',
-        marginRight: 20
+        fontSize: 15,
+        marginBottom: 5,
+        marginTop: 5,
+
     },
-    status:{
-        fontSize:30
+    status: {
+        fontSize: 30
     }
 });
